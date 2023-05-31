@@ -63,7 +63,7 @@ class StudentApi with ChangeNotifier {
     // } else {
     //   print(response.reasonPhrase);
     // }
-    var headers = {'Content-Type': 'application/json'};
+    Map<String, String> headers = {'Content-Type': 'application/json'};
     String path = 'add-students-to-group/$groupId/';
     Uri url = Uri(
       scheme: 'https',
