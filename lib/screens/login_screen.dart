@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../providers/login.dart';
 import 'home_screen.dart';
@@ -223,24 +224,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           children: [
                             Spacer(),
-                            Text(
-                              "Or",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Spacer(),
-                            Text(
-                              "Login with",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w600,
+                            TextButton(
+                              onPressed: () async {
+                                const url = 'https://lmsapi.pythonanywhere.com/admin/';
+                                if (await canLaunchUrl(Uri.parse(url))) {
+                                  await launchUrl(Uri.parse(url));
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              child: Text(
+                                "Django Admin panel",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                             Spacer(),
