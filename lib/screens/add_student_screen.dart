@@ -60,7 +60,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          final students = Provider.of<StudentApi>(context, listen: false).students;
+          final students = Provider.of<StudentApi>(context, listen: false).allStudents;
           List<int> selectedStudentIds = [];
           for (int i = 0; i < checkboxStates.length; i++) {
             if (checkboxStates[i]) {
