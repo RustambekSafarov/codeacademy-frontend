@@ -13,6 +13,11 @@ class StudentApi with ChangeNotifier {
     return _students;
   }
 
+  List<Student> _allStudents = [];
+  List<Student> get allStudents {
+    return _allStudents;
+  }
+
   Future<void> getStudent({int? groupId}) async {
     String path = groupId != null ? '/get-students-from-group/$groupId/' : 'student/all/';
     Uri url = Uri(
@@ -44,7 +49,7 @@ class StudentApi with ChangeNotifier {
 
     List dataFromJson = jsonDecode(response.body);
 
-    _students = dataFromJson.map((e) => Student.getStudent(e)).toList();
+    _allStudents = dataFromJson.map((e) => Student.getStudent(e)).toList();
     // print(_students);
     notifyListeners();
   }

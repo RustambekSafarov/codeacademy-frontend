@@ -289,23 +289,39 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                     );
                                   }),
                               const SizedBox(width: 10),
-                              ActionChip(
-                                label: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text('Add student this group'),
-                                ),
-                                onPressed: () {
-                                  context.goNamed(AddStudentScreen.routeName, extra: {
-                                    'groupId': '${widget.id}',
-                                    'students': Provider.of<StudentApi>(context, listen: false).students,
-                                    'id': widget.id,
-                                  });
-                                  // showDialog(
-                                  //   context: context,
-                                  //   builder: (context) => StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-                                  //     return CustomDialog(groupId: widget.id);
-                                  //   }),
-                                  // );
+                              FutureBuilder(
+                                future: Provider.of<StudentApi>(context, listen: false).getAllStudent(),
+                                builder: (context, snapshot) {
+                                  return snapshot.connectionState == ConnectionState.waiting
+                                      ? const Center(
+                                          child: SpinKitThreeInOut(
+                                            color: Colors.black,
+                                            size: 30,
+                                          ),
+                                        )
+                                      : snapshot.hasError
+                                          ? Center(
+                                              child: Text(snapshot.error.toString()),
+                                            )
+                                          : ActionChip(
+                                              label: const Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Text('Add student this group'),
+                                              ),
+                                              onPressed: () {
+                                                context.goNamed(AddStudentScreen.routeName, extra: {
+                                                  'groupId': '${widget.id}',
+                                                  'students': Provider.of<StudentApi>(context, listen: false).allStudents,
+                                                  'id': widget.id,
+                                                });
+                                                // showDialog(
+                                                //   context: context,
+                                                //   builder: (context) => StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                                                //     return CustomDialog(groupId: widget.id);
+                                                //   }),
+                                                // );
+                                              },
+                                            );
                                 },
                               ),
                             ],
